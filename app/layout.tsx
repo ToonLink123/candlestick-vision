@@ -3,9 +3,9 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Candlestick Pattern Recognition — ECE 5554 Project Proposal',
+  title: 'Can Candlestick Charts Predict Stock Price Movements? — ECE 5554 Proposal',
   description:
-    'Training a computer vision model to identify bullish and bearish candlestick patterns and comparing it with traditional numerical machine learning for stock price prediction.',
+    'ECE 4554/5554 project proposal comparing candlestick chart vision models with numerical market data for stock movement prediction.',
   icons: {
     icon: [
       {
