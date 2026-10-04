@@ -1,42 +1,23 @@
-const candles = [
-  { x: 70, o: 256, c: 232, h: 220, l: 268, up: true },
-  { x: 125, o: 232, c: 196, h: 184, l: 244, up: true },
-  { x: 180, o: 196, c: 220, h: 189, l: 237, up: false },
-  { x: 235, o: 220, c: 148, h: 136, l: 227, up: true },
-  { x: 290, o: 148, c: 160, h: 143, l: 182, up: false },
-  { x: 345, o: 160, c: 124, h: 107, l: 165, up: true },
-  { x: 400, o: 124, c: 136, h: 112, l: 150, up: false },
-  { x: 455, o: 136, c: 93, h: 83, l: 143, up: true },
-  { x: 510, o: 93, c: 112, h: 88, l: 124, up: false },
-  { x: 565, o: 112, c: 76, h: 64, l: 117, up: true },
-  { x: 620, o: 76, c: 88, h: 69, l: 100, up: false },
-  { x: 675, o: 88, c: 52, h: 40, l: 93, up: true },
+const datasets = [
+  { name: 'SP500 Chart Dataset — GitHub', url: 'https://github.com/JaehyunAhn/SP500-Chart-Dataset' },
+  {
+    name: 'SP500 Chart Dataset — Hugging Face',
+    url: 'https://huggingface.co/datasets/sogosonnet/SP500-Chart-Dataset',
+  },
+  { name: 'FinVQA-Chart — GitHub', url: 'https://github.com/LPOSP/FinVQA-Chart' },
+  {
+    name: 'Candlestick Dataset — Kaggle',
+    url: 'https://www.kaggle.com/datasets/farshidhossain68/candle-stick',
+  },
+  {
+    name: 'Candlestick Pattern Detection — Roboflow',
+    url: 'https://universe.roboflow.com/candlestickpatterndataset/candle-stick-pattern-detection/browse?queryText=&pageSize=100&startingIndex=0&browseQuery=true',
+  },
+  {
+    name: 'Chart Dataset — Roboflow',
+    url: 'https://universe.roboflow.com/space307/chart-ct0xd/browse?queryText=&pageSize=100&startingIndex=0&browseQuery=true',
+  },
 ]
-
-function CandlestickChart() {
-  return (
-    <svg
-      viewBox="0 0 720 300"
-      role="img"
-      aria-label="Example candlestick chart with bullish and bearish candles"
-      className="w-full rounded-xl border border-border bg-card p-2"
-    >
-      <line x1="40" y1="280" x2="700" y2="280" stroke="#a8a29e" strokeWidth="1" />
-      {candles.map((c) => (
-        <g key={c.x}>
-          <line x1={c.x} y1={c.h} x2={c.x} y2={c.l} stroke={c.up ? '#16a34a' : '#dc2626'} strokeWidth="2" />
-          <rect
-            x={c.x - 12}
-            y={Math.min(c.o, c.c)}
-            width="24"
-            height={Math.max(Math.abs(c.c - c.o), 2)}
-            fill={c.up ? '#16a34a' : '#dc2626'}
-          />
-        </g>
-      ))}
-    </svg>
-  )
-}
 
 export default function Page() {
   return (
@@ -49,16 +30,31 @@ export default function Page() {
           Candlestick Pattern Recognition: Can Computer Vision Predict Stock Price Movements?
         </h1>
         <p className="mt-6 text-lg text-muted-foreground">
-          Team Members: [Your Name], [Partner Name]
+          Team Members: Eshan Agarwal, Brennen Woodruff
         </p>
       </header>
 
       <figure className="my-10">
-        <CandlestickChart />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/image.png"
+          alt="Candlestick chart with moving averages, a price band, and volume bars"
+          className="mx-auto w-full max-w-md rounded-xl border border-border"
+        />
         <figcaption className="mt-3 text-center text-sm text-muted-foreground">
-          An example candlestick chart. Each candle summarizes one trading period (open, high,
-          low, close); green candles closed higher (bullish) and red candles closed lower
-          (bearish).
+          A candlestick chart of a stock in a downtrend, with green (bullish) and red (bearish)
+          daily candles
+          <br />
+          Source:{' '}
+          <a
+            href="https://huggingface.co/datasets/sogosonnet/SP500-Chart-Dataset"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent underline"
+          >
+            SP500-Chart-Dataset
+          </a>{' '}
+          (J. Ahn, 2025), CC BY 4.0
         </figcaption>
       </figure>
 
@@ -88,28 +84,20 @@ export default function Page() {
         <h2 className="mb-4 font-serif text-2xl md:text-3xl">Approach</h2>
         <div className="space-y-4 text-base leading-relaxed">
           <p>
-            The project uses two parallel models that solve the same prediction task, one that
-            looks at chart images and one that looks at numbers.
+            We plan to use two different approaches to predict future stock price movements and
+            compare their performance. The first approach will use computer vision to analyze
+            candlestick charts. A convolutional neural network, such as ResNet-18, will be trained
+            on these images to learn visual features and patterns associated with bullish and
+            bearish price movements. This will be compared to a traditional stock market
+            prediction model that uses numerical market data from the same time periods to
+            determine which approach is more accurate.
           </p>
           <p>
-            <strong>Vision model:</strong> Historical daily market data (open, high, low, close,
-            and volume) will be rendered into candlestick chart images, where each image shows a
-            fixed window of consecutive trading days. A convolutional neural network (CNN) will
-            then be trained to classify each chart image as bullish or bearish, based on whether
-            the stock price moves up or down over a short horizon after the window ends. We plan
-            to first train a small CNN from scratch and, if needed, compare it with a fine-tuned
-            pretrained image classifier.
-          </p>
-          <p>
-            <strong>Numerical model:</strong> A traditional machine learning model, such as
-            logistic regression or gradient-boosted trees, will be trained on the same data
-            windows represented as numerical features: raw OHLCV values and common technical
-            indicators.
-          </p>
-          <p>
-            Both models will be evaluated on the same held-out test period, so that the
-            comparison directly measures whether the visual candlestick representation contains
-            predictive information beyond what the raw numbers already provide.
+            The performance of both models will be evaluated using accuracy, precision, recall,
+            F1-score, and confusion matrices. We will also use Grad-CAM with the computer vision
+            model to visualize which areas of the candlestick chart have the greatest influence on
+            its predictions. This will help us identify the visual patterns learned by the model
+            and better understand how it determines what may happen to the stock next.
           </p>
         </div>
       </section>
@@ -118,42 +106,88 @@ export default function Page() {
         <h2 className="mb-4 font-serif text-2xl md:text-3xl">Plans for Experiments</h2>
         <div className="space-y-4 text-base leading-relaxed">
           <p>
-            <strong>Data:</strong> We plan to use publicly available historical daily market data
-            for large-cap U.S. stocks (for example, S&amp;P 500 constituents), downloaded through
-            the yfinance API. For each stock and each trading day, we will generate a candlestick
-            chart image covering the previous N trading days, along with a binary label that
-            indicates whether the closing price was higher (bullish) or lower (bearish) k trading
-            days later. The data will be split chronologically, training on earlier years and
-            testing on later years, to avoid look-ahead leakage.
+            For our experiments, we plan to use the SP500 Chart Dataset, which contains
+            candlestick chart images generated from real S&amp;P 500 market data. The dataset
+            contains 1.37 million images from 501 stocks between 2010 and 2025. Each image
+            represents 20 trading days and includes labels based on the stock&apos;s future price.
+            We will also use the FinVQA-Chart dataset, which contains high-resolution candlestick
+            charts from real market data between 2020 and 2024 and includes labeled candlestick
+            patterns. Additional candlestick datasets from Kaggle and Roboflow will be used to help
+            train or evaluate the identification of specific bullish and bearish patterns.
+          </p>
+          <div>
+            <p className="font-semibold">Datasets:</p>
+            <ul className="mt-2 list-disc space-y-1 pl-6">
+              {datasets.map((d) => (
+                <li key={d.url}>
+                  {d.name}:{' '}
+                  <a href={d.url} target="_blank" rel="noopener noreferrer" className="break-all text-accent underline">
+                    {d.url}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <p>
+            We will implement the training and evaluation for the computer vision model ourselves.
+            This will include preprocessing the chart images, training a CNN such as ResNet-18,
+            generating predictions, and calculating accuracy, precision, recall, F1-score, and
+            confusion matrices. We will use existing machine learning libraries such as PyTorch.
+            Grad-CAM will also be used to visualize which portions of the candlestick charts have
+            the greatest influence on the model&apos;s predictions.
           </p>
           <p>
-            <strong>Experiments:</strong> We plan to run the following:
-          </p>
-          <ol className="list-decimal space-y-1 pl-6">
-            <li>Naive baselines: always predict up, always predict down, and random guessing.</li>
-            <li>CNN classification of candlestick chart images.</li>
-            <li>Numerical models (logistic regression and gradient boosting) on the same windows.</li>
-            <li>A parameter study varying the window size N and prediction horizon k.</li>
-            <li>Qualitative inspection of correctly and incorrectly classified charts.</li>
-          </ol>
-          <p>
-            <strong>Metrics:</strong> Accuracy, precision, recall, and F1 score, reported for all
-            models on the same test period.
+            The experiments will be performed in multiple stages. The first experiment will focus
+            on whether the computer vision model can recognize bullish and bearish candlestick
+            patterns from chart images. Using labeled candlestick datasets, we will evaluate how
+            accurately the model can correctly identify visual patterns and if it is correctly
+            understanding candlestick charts.
           </p>
           <p>
-            <strong>Success criteria:</strong> The project is successful if the models clearly
-            outperform the naive baselines, and if we can make a well-supported statement about
-            whether the image-based approach is comparable to, better than, or worse than the
-            numerical approach.
+            Once the model can reliably recognize candlestick patterns, the next experiments will
+            test whether it can use the visual information it identifies to make useful decisions.
+            We will begin with basic candlestick trading strategies, where known bullish or bearish
+            patterns are used to predict whether the price is more likely to increase or decrease.
+            The predicted movement can then be compared against the actual movement of the stock
+            following the chart. This will allow us to determine whether the model can not only
+            recognize patterns but also correctly use those patterns when analyzing market
+            movement.
           </p>
           <p>
-            <strong>Expected outcomes and uncertainties:</strong> Short-horizon stock movement is
-            noisy, so there is a real chance that both models perform close to chance. That
-            result would itself be informative: it would suggest that visual candlestick patterns
-            do not carry reliable predictive signal beyond the numbers. We expect the experiments
-            to show how much (if any) predictive information the chart representation adds.
+            Then we will train the computer vision model to predict future stock movement directly
+            from chart images. We will experiment with different visual information, including
+            candlesticks, trading volume, and technical indicators such as moving averages.
+            Grad-CAM will be used to visualize which portions of the chart influence the
+            model&apos;s predictions.
+          </p>
+          <p>
+            Then the model will be compared against a traditional machine learning model using
+            numerical stock market data from the same stock and time periods. Both models will
+            attempt to predict the same future prices and allows us to see how accurate visual
+            trading strategies are and if the bot can correctly interpret visual models of the
+            stock market.
+          </p>
+          <p>
+            If the model can correctly identify bullish and bearish then the model will be
+            considered successful. If the model is able to then predict to a certain degree of
+            accuracy the future price of a stock similar to a traditional stock market bot, then it
+            will prove as a bonus and insight to how visual graphs can benefit stock traders.
+          </p>
+          <p>
+            Pattern recognition using basic trading strategies are expected to work but will likely
+            not beat a proven traditional AI bot that has historically done better. It may provide
+            some insight if visual graphs are a factor at all in predicting the stock market.
           </p>
         </div>
+      </section>
+
+      <section className="mb-12">
+        <h2 className="mb-4 font-serif text-2xl md:text-3xl">Website Tools and AI Assistance</h2>
+        <p className="text-base leading-relaxed">
+          We used a Vercel template and basic AI assistance to build and format this website and
+          support its deployment on Vercel. The project idea and research towards the proposal
+          were not assisted by AI.
+        </p>
       </section>
 
       <footer className="border-t border-border pt-6 text-sm text-muted-foreground">
