@@ -3,9 +3,9 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Vision / 01 — Teaching a camera to notice',
-  description: 'An independent computer vision study exploring reliable real-time perception in messy environments.',
-  generator: 'v0.app',
+  title: 'Candlestick Pattern Recognition — ECE 5554 Project Proposal',
+  description:
+    'Training a computer vision model to identify bullish and bearish candlestick patterns and comparing it with traditional numerical machine learning for stock price prediction.',
   icons: {
     icon: [
       {
